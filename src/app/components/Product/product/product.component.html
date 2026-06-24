@@ -1,0 +1,31 @@
+<mat-card class="bgcolor mt-4">
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button routerLink="/product/adduser" mat-raised-button color="primary" class="mt-2 mb-3">Add
+                    Product</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3" (click)="Singlaproduct(product.pid)"
+                *ngFor="let product of productdata;  trackBy: trackByfun">
+                <mat-card class="h-100">
+                    <mat-card-header>
+                        <mat-card-title class="text-primary">{{product.pname}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <img [src]="product.pimage" alt="{{product.pname}}" class="mb-3">
+                        <p><strong>Price:</strong> {{product.pprice}}</p>
+                        <p><strong>Description:</strong> {{product.pdescription}}</p>
+                        <p><strong>Is Returnable:</strong> {{product.canReturn ? 'Yes' : 'No'}}</p>
+                        <span class="badge badge-pill" [ngClass]="{
+                            'badge-primary' : product.pstatus === 'In-Progress',
+                            'badge-warning' : product.pstatus === 'Dispatched',
+                            'badge-success' : product.pstatus === 'Delivered'
+                        }">{{product.pstatus}}</span>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
