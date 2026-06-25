@@ -14,38 +14,39 @@ import { UserService } from 'src/app/services/user.service';
 export class SingleuserComponent implements OnInit {
 
   userId !: string
-  userDetails! : Iuser
+  userDetails!: Iuser
   constructor(
-    private _userservice : UserService,
-    private routes : ActivatedRoute,
-    private matdilog : MatDialog,
-    private snakbar : SnakbarService,
-    private route : Router
+    private _userservice: UserService,
+    private routes: ActivatedRoute,
+    private matdilog: MatDialog,
+    private snakbar: SnakbarService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
     this.getid()
-    this.getsingleuser()
   }
 
-  getid(){
-    this.userId = this.routes.snapshot.paramMap.get('id')!
-    console.log(this.userId);
+  getid() {
+    this.routes.paramMap.subscribe(params => {
+      this.userId = params.get('id')!;
+      this.getsingleuser()
+    })
   }
 
-  getsingleuser(){
+  getsingleuser() {
     this._userservice.getsingleuser(this.userId).subscribe(res => {
       this.userDetails = res
     })
   }
 
-  onRemoveUser(){
+  onRemoveUser() {
     this.matdilog.open(GetconfirmComponent, {
-      width : '500px',
-      disableClose : true,
-      data : `Are you sure do you want to remove this user whose id is ${this.userId}`
+      width: '500px',
+      disableClose: true,
+      data: `Are you sure do you want to remove this user whose id is ${this.userId}`
     }).afterClosed().subscribe(res => {
-      if(res){
+      if (res) {
         this._userservice.removeuser(this.userDetails.userId)
           .subscribe(res => {
             this.snakbar.OpenSnakbar(res.msg)

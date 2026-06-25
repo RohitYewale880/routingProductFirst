@@ -15,7 +15,7 @@ export class UserService {
       profileDescription: '3 years of experience in Angular development.',
       profileImage: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
       skills: ['Angular', 'TypeScript', 'RxJS', 'Bootstrap'],
-      experienceYears: '3',
+      experienceYears: '5 to 7 years',
       isActive: false,
       address: {
         current: {
@@ -40,7 +40,7 @@ export class UserService {
       profileDescription: 'Experienced in Angular and responsive UI development.',
       profileImage: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
       skills: ['Angular', 'HTML', 'CSS', 'JavaScript'],
-      experienceYears: '2',
+      experienceYears: '3 to 5 years',
       isActive: true,
       address: {
         current: {

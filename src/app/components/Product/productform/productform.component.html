@@ -63,6 +63,7 @@
                 *ngIf="!isineditmode"
                  mat-raised-button color="primary" class="w-100">Add Product</button>
                 <button
+                [disabled]="editobj.canReturn === 0"
                 *ngIf="isineditmode"
                 (click)="onUpadate()"
                  type="button" mat-raised-button color="primary" class="w-100">Update Product</button>

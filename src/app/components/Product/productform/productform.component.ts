@@ -70,6 +70,9 @@ export class ProductformComponent implements OnInit {
           next : res => {
             if(res){
               this.editobj = res
+              if(res.canReturn === 0){
+                this.productform.disable()
+              }
               this.productform.patchValue(res)
             }
           }

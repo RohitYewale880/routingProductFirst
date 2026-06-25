@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Iuser } from 'src/app/modals/product';
 import { UserService } from 'src/app/services/user.service';
 
@@ -11,21 +12,31 @@ export class UsersComponent implements OnInit {
 
   userdata !: Iuser[]
   constructor(
-    private _userservice : UserService
+    private _userservice: UserService,
+    private router: Router,
+    private routes : ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.getdata()
   }
 
-  getdata(){
+  getdata() {
     this._userservice.getusers()
       .subscribe(res => {
         this.userdata = res
+        if (this.userdata.length > 0) {
+          this.router.navigate(
+            [this.userdata[0].userId],
+            {
+              relativeTo: this.routes
+            }
+          );
+        }
       })
   }
 
-  trackbyfun(index : number, item : Iuser){
+  trackbyfun(index: number, item: Iuser) {
     return item.userId
   }
 }

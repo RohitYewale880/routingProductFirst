@@ -12,47 +12,49 @@ import { UserformComponent } from './components/User/users/userform/userform.com
 const routes: Routes = [
   {
     path: '',
-    component : HomeComponent
+    component: HomeComponent
   },
   {
     path: 'home',
-    component : HomeComponent
+    component: HomeComponent
   },
   {
     path: 'product',
-    component : ProductComponent
+    component: ProductComponent
   },
   {
     path: 'users',
-    component : UsersComponent
+    component: UsersComponent,
+    children: [
+      {
+        path: 'userAdd',
+        component: UserformComponent
+      },
+      {
+        path: ':id',
+        component: SingleuserComponent
+      },
+      {
+        path: ':id/edit',
+        component: UserformComponent
+      }
+    ]
   },
   {
     path: 'fairs',
-    component : FairsComponent
+    component: FairsComponent
   },
   {
     path: 'product/adduser',
-    component : ProductformComponent
+    component: ProductformComponent
   },
   {
     path: 'product/:id',
-    component : SinglaproductComponent
+    component: SinglaproductComponent
   },
   {
     path: 'product/:id/edit',
-    component : ProductformComponent
-  },
-  {
-    path : 'users/userAdd',
-    component : UserformComponent
-  },
-  {
-    path : 'users/:id',
-    component : SingleuserComponent
-  },
-  {
-    path : 'users/:id/edit',
-    component : UserformComponent
+    component: ProductformComponent
   }
 ];
 
