@@ -22,14 +22,22 @@ export class ProductComponent implements OnInit {
   }
 
   getchdata(){
-    this.productdata = this.productService.productsArr
+    this.productService.getProducts()
+      .subscribe(res => {
+        this.productdata = res
+
+        if(this.productdata.length > 0 && this.router.url === '/product') {
+          this.router.navigate(
+            [this.productdata[0].pid],
+            {
+              relativeTo: this.routes
+            }
+          );
+        }
+      })
   }
 
-  trackByfun(index:number,product:Iproduct){
+  trackbyfun(index:number,product:Iproduct){
     return product.pid
-  }
-
-  Singlaproduct(id : string){
-    this.router.navigate(['product',id])
   }
 }

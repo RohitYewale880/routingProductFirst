@@ -13,47 +13,57 @@ import { SnakbarService } from 'src/app/services/snakbar.service';
 })
 export class SinglaproductComponent implements OnInit {
 
-  productId !:string;
+  productArr! : Array<Iproduct>
+  productId !: string;
   product !: Iproduct;
   constructor(
     private route: ActivatedRoute,
-    private router : Router,
+    private router: Router,
     private productService: ProductService,
-    private _matdilog : MatDialog,
-    private _snakbar :SnakbarService
+    private _matdilog: MatDialog,
+    private _snakbar: SnakbarService
   ) { }
 
   ngOnInit(): void {
-    this.getsingleproduct()
+    this.getid()
   }
 
-  getsingleproduct(){
-    this.productId = this.route.snapshot.paramMap.get('id')!;
+  getid() {
+    this.route.paramMap.subscribe(res => {
+      this.productId = res.get('id')!
+
+      this.getsingleproduct()
+    })
+  }
+
+  getsingleproduct() {
     this.productService.getProductById(this.productId)
       .subscribe({
-        next : (res => {
+        next: (res => {
           this.product = res!
         }),
-        error : err => {
+        error: err => {
           console.log(err);
         }
       })
   }
 
-  onRemove(){
+  onRemove() {
     this._matdilog.open(GetconfirmComponent, {
-      width : '500px',
-      disableClose : true,
-      data : `Are you sure do you want to remove this product whose id is ${this.product.pid}`
+      width: '500px',
+      disableClose: true,
+      data: `Are you sure do you want to remove this product whose id is ${this.product.pid}`
     }).afterClosed().subscribe(res => {
-      if(res){
+      if (res) {
         this.productService.Removeproduct(this.product.pid)
           .subscribe({
-            next : res => {
-              this.router.navigate(['product'])
+            next: res => {
+              this.productService.getProducts().subscribe(res => {
+              this.router.navigate(['/product', res[0].pid])
+              })
               this._snakbar.OpenSnakbar(res.msg)
             },
-            error : err => {
+            error: err => {
               console.log(err);
             }
           })
@@ -61,10 +71,10 @@ export class SinglaproductComponent implements OnInit {
     })
   }
 
-  onEdit(){
-    this.router.navigate(['/product', this.productId, 'edit'],{
-      queryParamsHandling : 'preserve',
-      relativeTo : this.route
+  onEdit() {
+    this.router.navigate(['edit'], {
+      queryParamsHandling: 'preserve',
+      relativeTo: this.route
     })
   }
 }

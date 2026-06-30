@@ -21,6 +21,9 @@ import { GetconfirmComponent } from './components/getconfirm/getconfirm.componen
 import { UserformComponent } from './components/User/users/userform/userform.component';
 import { SingleuserComponent } from './components/User/users/singleuser/singleuser.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { EmailDashComponent } from './components/Email/email-dash/email-dash.component';
+import { FairscardComponent } from './components/Fairs/fairscard/fairscard.component';
+import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { MatChipsModule } from '@angular/material/chips';
     ProductformComponent,
     GetconfirmComponent,
     UserformComponent,
-    SingleuserComponent
+    SingleuserComponent,
+    EmailDashComponent,
+    FairscardComponent,
+    SinglefairsComponent
   ],
   imports: [
     BrowserModule,

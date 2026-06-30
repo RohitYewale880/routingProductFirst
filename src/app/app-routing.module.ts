@@ -8,6 +8,8 @@ import { SinglaproductComponent } from './components/Product/singlaproduct/singl
 import { ProductformComponent } from './components/Product/productform/productform.component';
 import { SingleuserComponent } from './components/User/users/singleuser/singleuser.component';
 import { UserformComponent } from './components/User/users/userform/userform.component';
+import { EmailDashComponent } from './components/Email/email-dash/email-dash.component';
+import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs.component';
 
 const routes: Routes = [
   {
@@ -20,7 +22,21 @@ const routes: Routes = [
   },
   {
     path: 'product',
-    component: ProductComponent
+    component: ProductComponent,
+    children: [
+      {
+        path: 'adduser',
+        component: ProductformComponent
+      },
+      {
+        path: ':id',
+        component: SinglaproductComponent
+      },
+      {
+        path: ':id/edit',
+        component: ProductformComponent
+      }
+    ]
   },
   {
     path: 'users',
@@ -42,19 +58,17 @@ const routes: Routes = [
   },
   {
     path: 'fairs',
-    component: FairsComponent
+    component: FairsComponent,
+    children : [
+      {
+        path : ':fairId',
+        component : SinglefairsComponent
+      }
+    ]
   },
   {
-    path: 'product/adduser',
-    component: ProductformComponent
-  },
-  {
-    path: 'product/:id',
-    component: SinglaproductComponent
-  },
-  {
-    path: 'product/:id/edit',
-    component: ProductformComponent
+    path: 'email',
+    component: EmailDashComponent
   }
 ];
 

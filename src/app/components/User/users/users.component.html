@@ -10,20 +10,21 @@
         <div class="col-md-4">
             <mat-card>
                 <ul class="list-group">
-                    <li class="list-group-item"
-                    [routerLink]="[user.userId]"
-                    [queryParams]="{ userRole: user.userRole }"
-                    routerLinkActive="active"
-                    *ngFor="let user of userdata; trackBy : trackbyfun"
-                    >
-                        <strong>{{user.userName}}</strong>
-                        <small 
-                        class="badge ml-3"
-                        [ngClass]="{
-                            'badge-success' : user.isActive,
-                            'badge-danger' : !user.isActive
-                        }"
-                        >
+                        <li
+                            class="list-group-item"
+                            *ngFor="let user of userdata; trackBy: trackbyfun"
+                            [routerLink]="['/users', user.userId]"
+                            [queryParams]="{ userRole: user.userRole }"
+                            routerLinkActive="active"
+                            >
+                            <strong>{{user.userName}}</strong>
+                            <small 
+                            class="badge ml-3"
+                            [ngClass]="{
+                                'badge-success' : user.isActive,
+                                'badge-danger' : !user.isActive
+                            }"
+                            >
                     {{user.isActive ? 'Active' : 'In-Active'}}    
                     </small>
                     </li>

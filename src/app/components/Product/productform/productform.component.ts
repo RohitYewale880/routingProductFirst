@@ -15,12 +15,12 @@ export class ProductformComponent implements OnInit {
 
   productform!: FormGroup
   isineditmode: boolean = false
-  editobj! : Iproduct
+  editobj!: Iproduct
   constructor(
-    private _productservice : ProductService,
-    private _snakbar : SnakbarService,
-    private router : Router,
-    private route : ActivatedRoute
+    private _productservice: ProductService,
+    private _snakbar: SnakbarService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -39,38 +39,38 @@ export class ProductformComponent implements OnInit {
     })
   }
 
-  onAddProduct(){
+  onAddProduct() {
     let val = this.productform.value
-    if(this.productform.invalid){
+    if (this.productform.invalid) {
       this.productform.markAllAsTouched()
-    }else{
-      let newobj : Iproduct = {
-        ...val, pid : Date.now().toString()
+    } else {
+      let newobj: Iproduct = {
+        ...val, pid: Date.now().toString()
       }
 
       this._productservice.Addproduct(newobj)
         .subscribe({
-          next : res =>{
-            this.router.navigate(['product'])
+          next: res => {
+            this.router.navigate(['product', res.data.pid])
             this._snakbar.OpenSnakbar(res.msg)
           },
-          error : err => {
+          error: err => {
             console.log(err);
           }
         })
     }
   }
 
-  patcheditproduct(){
+  patcheditproduct() {
     let params = this.route.snapshot.paramMap.get('id')
-    if(params){
+    if (params) {
       this.isineditmode = true
       this._productservice.getProductById(params)
         .subscribe({
-          next : res => {
-            if(res){
+          next: res => {
+            if (res) {
               this.editobj = res
-              if(res.canReturn === 0){
+              if (res.canReturn === 0) {
                 this.productform.disable()
               }
               this.productform.patchValue(res)
@@ -80,23 +80,30 @@ export class ProductformComponent implements OnInit {
     }
   }
 
-  onUpadate(){
+  onUpadate() {
     let val = this.productform.value
-    if(this.productform.invalid){
+    if (this.productform.invalid) {
       this.productform.markAllAsTouched()
-    }else{
-      let updatedObj : Iproduct = {
-        ...val, pid : this.editobj.pid
+    } else {
+      let updatedObj: Iproduct = {
+        ...val, pid: this.editobj.pid
       }
 
       this._productservice.Updateproduct(updatedObj)
         .subscribe({
-          next : res =>{
+          next: res => {
             this.isineditmode = false
-            this.router.navigate(['product'])
+            this.router.navigate(
+              ['/product', updatedObj.pid],
+              {
+                queryParams: {
+                  cr: updatedObj.canReturn
+                }
+              }
+            );
             this._snakbar.OpenSnakbar(res.msg)
           },
-          error : err => {
+          error: err => {
             console.log(err);
           }
         })

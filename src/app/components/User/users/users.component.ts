@@ -11,10 +11,11 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersComponent implements OnInit {
 
   userdata !: Iuser[]
+  activeUserId!: string
   constructor(
     private _userservice: UserService,
     private router: Router,
-    private routes : ActivatedRoute
+    private routes: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +26,7 @@ export class UsersComponent implements OnInit {
     this._userservice.getusers()
       .subscribe(res => {
         this.userdata = res
-        if (this.userdata.length > 0) {
+        if (this.userdata.length > 0 && this.router.url === '/users') {
           this.router.navigate(
             [this.userdata[0].userId],
             {
