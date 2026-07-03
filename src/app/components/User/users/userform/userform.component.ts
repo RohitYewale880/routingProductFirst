@@ -51,7 +51,7 @@ export class UserformComponent implements OnInit {
           let CurrentAdd = this.formcontrols['address'].get('current')?.value;
           this.formcontrols['address'].get('permanent')?.patchValue(CurrentAdd)
           this.formcontrols['address'].get('permanent')?.disable()
-        }else if(this.isInEditMode && !val){
+        } else if (this.isInEditMode && !val) {
           this.formcontrols['address'].get('permanent')?.patchValue(this.edituser.address.permanent)
           this.formcontrols['address'].get('permanent')?.enable()
         }
@@ -112,7 +112,11 @@ export class UserformComponent implements OnInit {
         .subscribe({
           next: res => {
             this.snackbar.OpenSnakbar(res.msg)
-            this.router.navigate(['/users', res.data.userId]);
+            this.router.navigate(['/users', res.data.userId], {
+              queryParams: {
+                userRole: res.data.userRole
+              }
+            });
           },
           error: err => {
             this.snackbar.OpenSnakbar(err.msg)
@@ -121,7 +125,7 @@ export class UserformComponent implements OnInit {
     }
   }
 
-  onskillremove(i : number){
+  onskillremove(i: number) {
     this.skillsArr.removeAt(i)
   }
 
@@ -133,7 +137,7 @@ export class UserformComponent implements OnInit {
           this.edituser = res
           this.isInEditMode = true
           this.userForm.patchValue(this.edituser)
-          if(res.userRole === 'Candidate'){
+          if (res.userRole === 'Candidate') {
             this.userForm.disable()
           }
           this.skillsArr.clear()
@@ -146,7 +150,7 @@ export class UserformComponent implements OnInit {
     }
   }
 
-  Updateuser(){
+  Updateuser() {
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched()
     } else {
@@ -155,7 +159,11 @@ export class UserformComponent implements OnInit {
         .subscribe({
           next: res => {
             this.snackbar.OpenSnakbar(res.msg)
-            this.router.navigate(['/users', res.data.userId]);
+            this.router.navigate(['/users', res.data.userId], {
+              queryParams: {
+                userRole: res.data.userRole
+              }
+            });
           },
           error: err => {
             this.snackbar.OpenSnakbar(err.msg)

@@ -50,7 +50,14 @@ export class SingleuserComponent implements OnInit {
         this._userservice.removeuser(this.userDetails.userId)
           .subscribe(res => {
             this.snakbar.OpenSnakbar(res.msg)
-            this.route.navigate(['/users']);
+            this._userservice.getusers().subscribe(res => {
+              this.route.navigate(['/users', res[0].userId], {
+              queryParams: {
+                userRole: res[0].userRole
+              }
+            });
+            })
+            
           })
       }
     })

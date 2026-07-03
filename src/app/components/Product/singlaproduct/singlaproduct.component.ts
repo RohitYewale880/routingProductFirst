@@ -13,7 +13,7 @@ import { SnakbarService } from 'src/app/services/snakbar.service';
 })
 export class SinglaproductComponent implements OnInit {
 
-  productArr! : Array<Iproduct>
+  productArr!: Array<Iproduct>
   productId !: string;
   product !: Iproduct;
   constructor(
@@ -59,7 +59,11 @@ export class SinglaproductComponent implements OnInit {
           .subscribe({
             next: res => {
               this.productService.getProducts().subscribe(res => {
-              this.router.navigate(['/product', res[0].pid])
+                this.router.navigate(['/product', res[0].pid], {
+                  queryParams: {
+                    cr: res[0].canReturn
+                  }
+                })
               })
               this._snakbar.OpenSnakbar(res.msg)
             },

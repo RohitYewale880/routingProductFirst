@@ -51,7 +51,11 @@ export class ProductformComponent implements OnInit {
       this._productservice.Addproduct(newobj)
         .subscribe({
           next: res => {
-            this.router.navigate(['product', res.data.pid])
+            this.router.navigate(['product', res.data.pid], {
+          queryParams : {
+            cr : res.data.canReturn
+          }
+        })
             this._snakbar.OpenSnakbar(res.msg)
           },
           error: err => {

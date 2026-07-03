@@ -28,10 +28,11 @@ export class UsersComponent implements OnInit {
         this.userdata = res
         if (this.userdata.length > 0 && this.router.url === '/users') {
           this.router.navigate(
-            [this.userdata[0].userId],
-            {
-              relativeTo: this.routes
+            [this.userdata[0].userId], {
+            queryParams: {
+              userRole: this.userdata[0].userRole
             }
+          }
           );
         }
       })

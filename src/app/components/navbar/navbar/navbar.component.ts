@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { FairsService } from 'src/app/services/fairs.service';
 import { ProductService } from 'src/app/services/product.service';
 import { UserService } from 'src/app/services/user.service';
@@ -16,7 +17,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private productService: ProductService,
-    private fairsservice : FairsService
+    private fairsservice : FairsService,
+    private authservice : AuthService
   ) { }
   
   ngOnInit(): void {
@@ -52,5 +54,10 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/fairs', fairs[0].fairId])
       }
     })
+  }
+
+  onLogOut(){
+    this.authservice.LogOut()
+    this.router.navigate([''])
   }
 }

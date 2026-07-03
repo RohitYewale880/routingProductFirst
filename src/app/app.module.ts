@@ -21,9 +21,10 @@ import { GetconfirmComponent } from './components/getconfirm/getconfirm.componen
 import { UserformComponent } from './components/User/users/userform/userform.component';
 import { SingleuserComponent } from './components/User/users/singleuser/singleuser.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { EmailDashComponent } from './components/Email/email-dash/email-dash.component';
 import { FairscardComponent } from './components/Fairs/fairscard/fairscard.component';
 import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,9 +39,9 @@ import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs
     GetconfirmComponent,
     UserformComponent,
     SingleuserComponent,
-    EmailDashComponent,
     FairscardComponent,
-    SinglefairsComponent
+    SinglefairsComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,8 @@ import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs
     MatIconModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    MatChipsModule
+    MatChipsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

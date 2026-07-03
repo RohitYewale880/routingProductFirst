@@ -8,13 +8,13 @@ import { SinglaproductComponent } from './components/Product/singlaproduct/singl
 import { ProductformComponent } from './components/Product/productform/productform.component';
 import { SingleuserComponent } from './components/User/users/singleuser/singleuser.component';
 import { UserformComponent } from './components/User/users/userform/userform.component';
-import { EmailDashComponent } from './components/Email/email-dash/email-dash.component';
 import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: AuthComponent
   },
   {
     path: 'home',
@@ -65,10 +65,6 @@ const routes: Routes = [
         component : SinglefairsComponent
       }
     ]
-  },
-  {
-    path: 'email',
-    component: EmailDashComponent
   }
 ];
 
