@@ -1,27 +1,72 @@
-<mat-card class="Mcard">
-    <div class="row">
-        <div class="col-md-6">
-            <img [src]="product.pimage" alt="">
-        </div>
-        <div class="col-md-6 info">
-            <h1 class="pb-4">{{product.pname}}</h1>
-            <h3 class="pb-4"><strong>Price:</strong> {{product.pprice}}</h3>
-            <h3 class="pb-4"><strong>Description:</strong> {{product.pdescription}}</h3>
-            <h3 class="pb-4"><strong>Is Returnable:</strong> {{product.canReturn ? 'Yes' : 'No'}}</h3>
-            <span class="badge badge-pill" [ngClass]="{
-                            'badge-primary' : product.pstatus === 'In-Progress',
-                            'badge-warning' : product.pstatus === 'Dispatched',
-                            'badge-success' : product.pstatus === 'Delivered'
-                        }">{{product.pstatus}}</span>
+<mat-card class="product-card">
 
-            <div class="mt-5 d-flex justify-content-between">
-                <button
-                (click)="onEdit()"
-                 mat-raised-button color="primary">Edit</button>
-                <button 
-                (click)="onRemove()"
-                 mat-raised-button color="warn">Delete</button>
+    <div class="row align-items-center">
+
+        <div class="col-md-5">
+
+            <div class="image-box">
+                <img [src]="product.pimage" [alt]="product.pname">
             </div>
+
         </div>
+
+        <div class="col-md-7">
+
+            <div class="product-info">
+
+                <h1>{{product.pname}}</h1>
+
+                <h2 class="price">
+                    ₹ {{product.pprice}}
+                </h2>
+
+                <p class="description">
+                    {{product.pdescription}}
+                </p>
+
+                <div class="detail-row">
+                    <strong>Returnable :</strong>
+                    <span>{{product.canReturn ? 'Yes' : 'No'}}</span>
+                </div>
+
+                <div class="detail-row">
+
+                    <strong>Status :</strong>
+
+                    <span class="status" [ngClass]="{
+              'progress' : product.pstatus === 'In-Progress',
+              'dispatch' : product.pstatus === 'Dispatched',
+              'deliver' : product.pstatus === 'Delivered'
+            }">
+
+                        {{product.pstatus}}
+
+                    </span>
+
+                </div>
+
+                <div class="btn-group">
+
+                    <button mat-raised-button color="primary" (click)="onEdit()">
+
+                        <mat-icon>edit</mat-icon>
+                        Edit
+
+                    </button>
+
+                    <button mat-raised-button color="warn" (click)="onRemove()">
+
+                        <mat-icon>delete</mat-icon>
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
+
 </mat-card>

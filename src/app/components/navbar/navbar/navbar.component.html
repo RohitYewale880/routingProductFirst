@@ -1,19 +1,65 @@
-<div class="container-fluid">
-  <nav class="navbar-custom px-3">
-    <div class="col-md-4">
-      <a class="navbar-brand fw-bold fs-3" routerLink="">
-        NavBar
-      </a>
-    </div>
-    <div class="col-md-8">
-      <ul class="navbar-menu">
-        <li class="mr-3"><a routerLink="home">Home</a></li>
-        <li class="mr-3"><a (click)="goToUsers()">Users</a></li>
-        <li class="mr-3"><a (click)="goToProduct()">Products</a></li>
-        <li class="mr-5"><a (click)="goToFairs()">Fairs</a></li>
+<div class="container-fluid p-0" *ngIf="haveToken()">
 
-        <button (click)="onLogOut()" mat-raised-button color="warn">Log Out</button>
-      </ul>
-    </div>
-  </nav>
+    <nav class="navbar-custom">
+
+        <a class="navbar-brand" routerLink="/home">
+
+            <span class="logo-circle">
+                <mat-icon>code</mat-icon>
+            </span>
+
+            <div>
+                <h4>Angular Dashboard</h4>
+                <small>Management System</small>
+            </div>
+
+        </a>
+
+        <ul class="navbar-menu">
+
+            <li [class.active]="activeMenu === 'home'">
+                <a routerLink="/home">
+                    <mat-icon>home</mat-icon>
+                    Home
+                </a>
+            </li>
+
+            <li [class.active]="activeMenu === 'users'">
+                <a (click)="goToUsers()">
+                    <mat-icon>group</mat-icon>
+                    Users
+                </a>
+            </li>
+
+            <li [class.active]="activeMenu === 'products'">
+                <a (click)="goToProduct()">
+                    <mat-icon>inventory_2</mat-icon>
+                    Products
+                </a>
+            </li>
+
+            <li [class.active]="activeMenu === 'fairs'">
+                <a (click)="goToFairs()">
+                    <mat-icon>festival</mat-icon>
+                    Fairs
+                </a>
+            </li>
+
+        </ul>
+
+        
+        <p class="userrole">{{ userRole }}</p>
+        <button
+            mat-raised-button
+            color="warn"
+            class="logout-btn"
+            (click)="onLogOut()">
+
+            <mat-icon>logout</mat-icon>
+            Logout
+
+        </button>
+
+    </nav>
+
 </div>

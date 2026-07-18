@@ -1,18 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ILogin, ISignIn } from '../modals/auth';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements OnInit{
 
   auth_Base_Url : string = environment.authBaseUrl
+  private userRole$ :Subject<string> = new Subject<string>();
+  userroleObservable$ = this.userRole$.asObservable();
   constructor(
     private _http : HttpClient
   ) { }
+
+  ngOnInit(): void {
+
+  }
+
+
 
   login(userdetails : ILogin) : Observable<any>{
     let login_Url = `${this.auth_Base_Url}/api/auth/login`
@@ -30,14 +38,15 @@ export class AuthService {
 
   saveUserRole(userRole : string){
     localStorage.setItem('userRole', userRole)
+    this.userRole$.next(userRole);
   }
 
-  getToken(){
-    localStorage.getItem('token')
+  getToken():string | null{
+    return localStorage.getItem('token')
   }
 
-  getUserRole(){
-    localStorage.getItem('userRole')
+  getUserRole() : string{
+    return localStorage.getItem('userRole') || '';
   }
 
   LogOut(){

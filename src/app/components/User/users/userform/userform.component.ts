@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { GetconfirmComponent } from 'src/app/components/getconfirm/getconfirm.component';
+import { ICanDeactivate } from 'src/app/modals/candeactivate';
 import { Iuser } from 'src/app/modals/product';
 import { SnakbarService } from 'src/app/services/snakbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './userform.component.html',
   styleUrls: ['./userform.component.scss']
 })
-export class UserformComponent implements OnInit {
+export class UserformComponent implements OnInit, ICanDeactivate {
 
   isInEditMode: boolean = false
   userForm !: FormGroup
@@ -20,8 +24,20 @@ export class UserformComponent implements OnInit {
   constructor(private userservice: UserService,
     private snackbar: SnakbarService,
     private router: Router,
-    private routes: ActivatedRoute
+    private routes: ActivatedRoute,
+    private _matdilog: MatDialog
   ) { }
+
+  canDeactivate(): boolean | Observable<boolean> {
+    if (!this.userForm.dirty || !this.isInEditMode) {
+        return true
+      }
+      return this._matdilog.open(GetconfirmComponent, {
+        width: '450px',
+        disableClose: true,
+        data: `Are you sure do you want to discard this changess...`
+      }).afterClosed();
+  }
 
   ngOnInit(): void {
     this.createUserForm()
@@ -139,10 +155,14 @@ export class UserformComponent implements OnInit {
           this.userForm.patchValue(this.edituser)
           if (res.userRole === 'Candidate') {
             this.userForm.disable()
+
           }
           this.skillsArr.clear()
           this.edituser.skills.forEach(ele => {
-            let control = new FormControl(ele)
+            let control = new FormControl({
+              value: ele,
+              disabled: res.userRole === 'Candidate'
+            });
             this.skillsArr.push(control)
           })
         }

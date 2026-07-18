@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCardModule } from "@angular/material/card";
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ICanDeactivate } from 'src/app/modals/candeactivate';
 import { Iproduct } from 'src/app/modals/product';
 import { ProductService } from 'src/app/services/product.service';
 import { SnakbarService } from 'src/app/services/snakbar.service';
+import { GetconfirmComponent } from '../../getconfirm/getconfirm.component';
 
 @Component({
   selector: 'app-productform',
   templateUrl: './productform.component.html',
   styleUrls: ['./productform.component.scss'],
 })
-export class ProductformComponent implements OnInit {
+export class ProductformComponent implements OnInit, ICanDeactivate {
 
   productform!: FormGroup
   isineditmode: boolean = false
@@ -20,8 +24,20 @@ export class ProductformComponent implements OnInit {
     private _productservice: ProductService,
     private _snakbar: SnakbarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _matdilog: MatDialog
   ) { }
+
+  canDeactivate(): boolean | Observable<boolean> {
+     if (!this.productform.dirty || !this.isineditmode) {
+            return true
+          }
+          return this._matdilog.open(GetconfirmComponent, {
+            width: '450px',
+            disableClose: true,
+            data: `Are you sure do you want to discard this changess...`
+          }).afterClosed();
+  }
 
   ngOnInit(): void {
     this.createform()

@@ -10,6 +10,11 @@ import { SingleuserComponent } from './components/User/users/singleuser/singleus
 import { UserformComponent } from './components/User/users/userform/userform.component';
 import { SinglefairsComponent } from './components/Fairs/singlefairs/singlefairs.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { AuthGardService } from './services/auth-gard.service';
+import { UserRoleGardService } from './services/user-role-gard.service';
+import { CanDeactivateService } from './services/can-deactivate.service';
+import { ProductResolverService } from './services/product-resolver.service';
+import { UserResolverService } from './services/user-resolver.service';
 
 const routes: Routes = [
   {
@@ -18,11 +23,22 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate : [AuthGardService, UserRoleGardService],
+    data : {
+      userRole : ['buyer', 'admin', 'superAdmin']
+    }
   },
   {
     path: 'product',
     component: ProductComponent,
+    resolve : {
+      product : ProductResolverService
+    },
+    canActivate: [AuthGardService, UserRoleGardService],
+    data : {
+      userRole : ['buyer', 'admin', 'superAdmin']
+    },
     children: [
       {
         path: 'adduser',
@@ -34,13 +50,21 @@ const routes: Routes = [
       },
       {
         path: ':id/edit',
-        component: ProductformComponent
+        component: ProductformComponent,
+        canDeactivate: [CanDeactivateService]
       }
     ]
   },
   {
     path: 'users',
     component: UsersComponent,
+    resolve : {
+      users : UserResolverService
+    },
+    canActivate: [AuthGardService, UserRoleGardService],
+    data : {
+      userRole : ['admin', 'superAdmin']
+    },
     children: [
       {
         path: 'userAdd',
@@ -52,13 +76,18 @@ const routes: Routes = [
       },
       {
         path: ':id/edit',
-        component: UserformComponent
+        component: UserformComponent,
+        canDeactivate: [CanDeactivateService]
       }
     ]
   },
   {
     path: 'fairs',
     component: FairsComponent,
+    canActivate: [AuthGardService, UserRoleGardService],
+    data : {
+      userRole : ['superAdmin']
+    },
     children : [
       {
         path : ':fairId',

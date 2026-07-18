@@ -16,27 +16,29 @@ export class UsersComponent implements OnInit {
     private _userservice: UserService,
     private router: Router,
     private routes: ActivatedRoute
-  ) { }
+  ) { 
+    this.userdata = this.routes.snapshot.data['users']
+  }
 
   ngOnInit(): void {
-    this.getdata()
+    // this.getdata()
   }
 
-  getdata() {
-    this._userservice.getusers()
-      .subscribe(res => {
-        this.userdata = res
-        if (this.userdata.length > 0 && this.router.url === '/users') {
-          this.router.navigate(
-            [this.userdata[0].userId], {
-            queryParams: {
-              userRole: this.userdata[0].userRole
-            }
-          }
-          );
-        }
-      })
-  }
+  // getdata() {
+  //   this._userservice.getusers()
+  //     .subscribe(res => {
+  //       this.userdata = res
+  //       if (this.userdata.length > 0 && this.router.url === '/users') {
+  //         this.router.navigate(
+  //           [this.userdata[0].userId], {
+  //           queryParams: {
+  //             userRole: this.userdata[0].userRole
+  //           }
+  //         }
+  //         );
+  //       }
+  //     })
+  // }
 
   trackbyfun(index: number, item: Iuser) {
     return item.userId

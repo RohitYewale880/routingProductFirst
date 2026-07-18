@@ -15,27 +15,29 @@ export class ProductComponent implements OnInit {
     private productService:ProductService,
     private routes: ActivatedRoute,
     private router : Router
-  ) { }
+  ) { 
+    this.productdata = this.routes.snapshot.data['product']
+  }
 
   ngOnInit(): void {
-    this.getchdata()
+    // this.getchdata()
   }
 
-  getchdata(){
-    this.productService.getProducts()
-      .subscribe(res => {
-        this.productdata = res
+  // getchdata(){
+  //   this.productService.getProducts()
+  //     .subscribe(res => {
+  //       this.productdata = res
 
-        if(this.productdata.length > 0 && this.router.url === '/product') {
-          this.router.navigate(
-            [this.productdata[0].pid],
-            {
-              relativeTo: this.routes
-            }
-          );
-        }
-      })
-  }
+  //       if(this.productdata.length > 0 && this.router.url === '/product') {
+  //         this.router.navigate(
+  //           [this.productdata[0].pid],
+  //           {
+  //             relativeTo: this.routes
+  //           }
+  //         );
+  //       }
+  //     })
+  // }
 
   trackbyfun(index:number,product:Iproduct){
     return product.pid
